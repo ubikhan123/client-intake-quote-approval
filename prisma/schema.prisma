@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum LeadStatus {
+  NEW
+  QUOTED
+  APPROVED
+  ARCHIVED
+}
+
+model Lead {
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  name        String
+  email       String
+  company     String?
+  briefJson   Json
+  status      LeadStatus @default(NEW)
+  publicToken String     @unique
+  quote       Quote?
+}
+
+model Quote {
+  id             String    @id @default(uuid())
+  leadId         String    @unique
+  lead           Lead      @relation(fields: [leadId], references: [id])
+  itemsJson      Json
+  subtotal       Int
+  rushFee        Int
+  discount       Int
+  total          Int
+  currency       String    @default("USD")
+  approvedAt     DateTime?
+  approvedByName String?
+}

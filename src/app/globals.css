@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  --font-inter: "Inter", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111827; }
+::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #818cf8 0%, #a78bfa 50%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass card */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+/* Glow button */
+.btn-glow {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
+  transition: all 0.2s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 30px rgba(79, 70, 229, 0.6);
+  transform: translateY(-1px);
+}
+
+/* Status badge colors */
+.badge-new { background: #1e3a5f; color: #60a5fa; border: 1px solid #2563eb; }
+.badge-quoted { background: #3b1f5e; color: #a78bfa; border: 1px solid #7c3aed; }
+.badge-approved { background: #064e3b; color: #34d399; border: 1px solid #059669; }
+.badge-archived { background: #1f2937; color: #9ca3af; border: 1px solid #374151; }
+
+/* Animated underline for links */
+.animated-link {
+  position: relative;
+}
+.animated-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #818cf8;
+  transition: width 0.2s ease;
+}
+.animated-link:hover::after { width: 100%; }
