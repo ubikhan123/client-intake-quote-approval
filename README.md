@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ClientQuote — Client Intake → Quote → Approval
 
 > A production-ready full-stack web app that transforms project briefs into professional, approvable quotes in seconds.
@@ -158,3 +159,6 @@ Total = Subtotal + Rush Fee - Discount
 ## License
 
 MIT
+=======
+# client-intake-quote-approval
+>>>>>>> d08b86c54b4a7531b463258e361b20db0d57c928
