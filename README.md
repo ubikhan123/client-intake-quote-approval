@@ -1,12 +1,13 @@
-<<<<<<< HEAD
 # ClientQuote — Client Intake → Quote → Approval
 
 > A production-ready full-stack web app that transforms project briefs into professional, approvable quotes in seconds.
 
-[![Built with Next.js](https://img.shields.io/badge/Next.js-14-black?logo=nextdotjs)](https://nextjs.org)
+[![Built with Next.js](https://img.shields.io/badge/Next.js-16-black?logo=nextdotjs)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://typescriptlang.org)
 [![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma)](https://prisma.io)
 [![Clerk](https://img.shields.io/badge/Auth-Clerk-6C47FF?logo=clerk)](https://clerk.com)
+
+**Live Demo:** https://client-intake-quote-approval-oaa6.vercel.app/
 
 ---
 
@@ -21,27 +22,17 @@
 
 ---
 
-## Screenshots
-
-> _Screenshots will be added after first deploy_
-
-| Landing Page | Quote Form | Public Quote | Admin Dashboard |
-|---|---|---|---|
-| `screenshot-landing.png` | `screenshot-form.png` | `screenshot-quote.png` | `screenshot-admin.png` |
-
----
-
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 14 (App Router) + TypeScript |
-| Styling | Tailwind CSS v4 (custom dark glassmorphism design) |
-| Database | PostgreSQL via Prisma ORM |
+| Framework | Next.js 16 (App Router) + TypeScript |
+| Styling | Tailwind CSS v4 (dark glassmorphism design) |
+| Database | PostgreSQL via Prisma v7 ORM |
 | Auth | Clerk (admin routes only) |
 | PDF | pdfkit (server-side generation) |
-| Validation | Zod |
-| Testing | Jest + ts-jest |
+| Validation | Zod v4 |
+| Testing | Jest + ts-jest (8 passing tests) |
 | Deploy | Vercel + Neon/Supabase PostgreSQL |
 
 ---
@@ -50,7 +41,7 @@
 
 ### Prerequisites
 - Node.js >= 18
-- PostgreSQL database (local, [Supabase](https://supabase.com), or [Neon](https://neon.tech))
+- PostgreSQL database ([Neon](https://neon.tech) free tier works great)
 - [Clerk account](https://dashboard.clerk.com)
 
 ### 1. Clone and install
@@ -67,12 +58,13 @@ npm install
 cp .env.example .env
 ```
 
-Edit `.env` with your values:
+Edit `.env`:
 
 ```env
 DATABASE_URL="postgresql://user:password@host:5432/dbname"
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
 CLERK_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
 ### 3. Set up database
@@ -89,8 +81,6 @@ npm run db:seed
 npm run dev
 ```
 
-Visit:
-
 - `http://localhost:3000` — Landing page
 - `http://localhost:3000/quote` — Client intake form
 - `http://localhost:3000/admin` — Admin dashboard (requires Clerk sign-in)
@@ -101,31 +91,25 @@ Visit:
 
 ```bash
 npm test
-npm run test:coverage
 ```
 
-Tests cover 8 scenarios: base pricing, feature add-ons, rush fees (+20%), volume discounts (-10%), stacked fees, all 6 features, and delivery estimate generation.
+8 scenarios: base pricing, feature add-ons, rush fees (+20%), volume discounts (-10%), stacked fees, all 6 features, delivery estimates.
 
 ---
 
-## How the Quote Rules Engine Works
-
-**File:** `src/lib/quoteEngine.ts`
-
-### Pricing Logic
+## Quote Engine Pricing Logic
 
 ```
-Base Cost = pages x price_per_page[complexity]
+Base Cost = pages × price_per_page[complexity]
   simple=$50/pg  standard=$90/pg  premium=$140/pg
 
 Feature Add-ons:
   auth: +$120 | adminPanel: +$200 | payments: +$250
   blogCMS: +$120 | multilingual: +$100 | animations: +$80
 
-Subtotal = Base + Feature Add-ons
-Rush Fee = +20% of subtotal (if rush = true)
-Volume Discount = -10% of subtotal (if pages >= 10)
-Total = Subtotal + Rush Fee - Discount
+Rush Fee = +20% of subtotal (timeline ≤ 1 week)
+Volume Discount = −10% of subtotal (pages ≥ 10)
+Total = Subtotal + Rush Fee − Discount
 ```
 
 ---
@@ -134,11 +118,11 @@ Total = Subtotal + Rush Fee - Discount
 
 | Method | Route | Auth | Description |
 |---|---|---|---|
-| POST | `/api/leads` | None | Submit intake form, creates Lead + Quote |
-| GET | `/api/quote/[token]` | None | Fetch quote by public token |
+| POST | `/api/leads` | None | Submit intake form |
+| GET | `/api/quote/[token]` | None | Fetch quote by token |
 | POST | `/api/quote/[token]/approve` | None | Approve quote |
 | GET | `/api/quote/[token]/pdf` | None | Download PDF |
-| GET | `/api/admin/leads` | Clerk | List leads with ?status= filter |
+| GET | `/api/admin/leads` | Clerk | List leads |
 | PATCH | `/api/admin/leads/[id]` | Clerk | Update lead status |
 | PATCH | `/api/admin/quote/[leadId]` | Clerk | Update quote items |
 
@@ -147,21 +131,12 @@ Total = Subtotal + Rush Fee - Discount
 ## Deployment on Vercel
 
 1. Push repo to GitHub
-2. Import project at [vercel.com/new](https://vercel.com/new)
-3. Add all environment variables from `.env.example`
-4. Deploy (Vercel auto-detects Next.js)
-5. Run `npm run db:seed` locally pointing at production DB
-
-**Live Demo:** _Add Vercel URL here after deploy_
+2. Import at [vercel.com/new](https://vercel.com/new)
+3. Add env vars: `DATABASE_URL`, Clerk keys, `NEXT_PUBLIC_APP_URL`
+4. Deploy
 
 ---
 
 ## License
 
 MIT
-=======
-# client-intake-quote-approval
->>>>>>> d08b86c54b4a7531b463258e361b20db0d57c928
-
-## Live Demo
-https://client-intake-quote-approval-oaa6.vercel.app/
